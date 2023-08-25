@@ -92,8 +92,30 @@ const updateUser = async (req, res) => {
   }
 };
 
+// VIEW INDIVIDUAL PROFILE
+const viewIndividualProfile = async (req, res) => {
+  try {
+    const user = await Users.findOne({ where: { id: req.params.id } });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({
+      status: 'success',
+      data: user,
+    });
+  } catch (error) {
+    console.error('Error while fetching individual profile:', error);
+    res
+      .status(500)
+      .json({ error: 'An error occurred while fetching the user profile' });
+  }
+};
+
 module.exports = {
   createUsers,
   login,
   updateUser,
+  viewIndividualProfile,
 };
