@@ -5,6 +5,7 @@ const app = express();
 const cors = require('cors');
 const db = require('./models');
 const userRouter = require('./routes/userRoute');
+const productRouter = require('./routes/productRoute');
 
 // MIDDLEWARES
 // ENABLE US PARSE REQUEST FROM THE CLIENT END EXAMPLE THUNDER CLIENT OR POSTMAN AND IN THE CASE OF THE WEB CLIENT SIDE ALSO
@@ -21,6 +22,9 @@ app.use(cors(corOptions));
 
 // ---------users route---------
 app.use('/api/auth', userRouter);
+
+// ---------product route---------
+app.use('/api/product', productRouter);
 
 // GO INTO THE DB AND SYNCHRONIZE IF THE MODELS ALREADY EXIST, IF NOT MAKE THEM EXIST
 db.sequelize.sync().then(() => {
