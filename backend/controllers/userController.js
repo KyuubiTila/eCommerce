@@ -56,7 +56,44 @@ const login = async (req, res) => {
   }
 };
 
+// UPDATE USER
+const updateUser = async (req, res) => {
+  const { name, email, newPassword, oldPassword } = req.body;
+
+  try {
+    const user = await Users.findOne({ where: { name: name } });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const checkPassword = await bcrypt.compare(oldPassword, user.password);
+
+    if (!checkPassword) {
+      return res.status(400).json({ error: 'Incorrect old password' });
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+
+    const updatedUser = await user.update({
+      name: name,
+      email: email,
+      password: passwordHash,
+    });
+
+    res
+      .status(200)
+      .json({ message: 'User updated successfully', data: updatedUser });
+  } catch (error) {
+    console.error('Error while updating user:', error);
+    res
+      .status(500)
+      .json({ error: 'An error occurred while updating the user' });
+  }
+};
+
 module.exports = {
   createUsers,
   login,
+  updateUser,
 };
