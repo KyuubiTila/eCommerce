@@ -61,7 +61,7 @@ const updateUser = async (req, res) => {
   const { name, email, newPassword, oldPassword } = req.body;
 
   try {
-    const user = await Users.findOne({ where: { name: name } });
+    const user = await Users.findOne({ where: { name: req.params.name } });
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -75,11 +75,14 @@ const updateUser = async (req, res) => {
 
     const passwordHash = await bcrypt.hash(newPassword, 10);
 
-    const updatedUser = await user.update({
-      name: name,
-      email: email,
-      password: passwordHash,
-    });
+    const updatedUser = await Users.update(
+      {
+        name: name,
+        email: email,
+        password: passwordHash,
+      },
+      { where: { name: req.params.name } }
+    );
 
     res
       .status(200)
