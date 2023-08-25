@@ -1,7 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   // "Posts" as the name it should place the table as
-  const Products = sequelize.define('Products', {
+  const Orders = sequelize.define('Orders', {
     name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    quantity: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -9,49 +13,51 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    brand: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    category: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0,
     },
-    countInStock: {
+    product: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    paymentMethod: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    isPaid: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    itemsPrice: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: 0.0,
     },
-    rating: {
+    taxPrice: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: 0.0,
     },
-    numReviews: {
+    shippingPrice: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: 0.0,
+    },
+    totalPrice: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0.0,
+    },
+    isDelivered: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    deliveredAt: {
+      type: DataTypes.DATE,
     },
   });
-
-  // PRODUCTS TABLE ASSOCIATION WITH REVIEWS TABLE, hence creating the ProductId on the Reviews table in respect to the PRODUCT
-  Products.associate = (models) => {
-    Products.hasMany(models.Reviews, {
-      onDelete: 'cascade',
-    });
-    Products.hasMany(models.Orders, {
-      onDelete: 'cascade',
-    });
-  };
-
-  return Products;
+  return Orders;
 };
