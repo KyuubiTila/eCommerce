@@ -29,6 +29,7 @@ app.use('/api/auth', userRouter);
 // ---------product route---------
 app.use('/api/product', productRouter);
 
+// Error Handling Middlewares
 app.use(notFoundHandler);
 
 app.use(globalErrorHandler);
