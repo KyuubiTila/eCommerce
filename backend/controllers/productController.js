@@ -60,8 +60,23 @@ const updateProduct = async (req, res) => {
   }
 };
 
+// VIEW PRODUCT DETAILS
+const viewProduct = async (req, res) => {
+  const product = await Products.findOne({ where: { id: req.params.id } });
+
+  if (!product) {
+    return res.status(404).json({ error: 'Product not found' });
+  }
+
+  res.json({
+    status: 'success',
+    data: product,
+  });
+};
+
 module.exports = {
   upload,
   createProduct,
   updateProduct,
+  viewProduct,
 };
