@@ -3,7 +3,7 @@ const db = require('../models');
 const Products = db.Products;
 
 // CREATE PRODUCT
-const createProduct = async (req, res) => {
+const createProduct = async (req, res, next) => {
   try {
     const productData = {
       image: req.file.path,
@@ -22,19 +22,17 @@ const createProduct = async (req, res) => {
     console.log(product);
   } catch (error) {
     console.error('Error creating product:', error);
-    res
-      .status(500)
-      .json({ error: 'An error occurred while creating the product' });
+    return next(error);
   }
 };
 
 // UPDATE PRODUCT
-const updateProduct = async (req, res) => {
+const updateProduct = async (req, res, next) => {
   try {
     const product = await Products.findOne({ where: { id: req.params.id } });
 
     if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+      throw new Error('error: Product not found');
     }
 
     const updateProduct = {
@@ -54,19 +52,17 @@ const updateProduct = async (req, res) => {
     console.log(updateProduct);
   } catch (error) {
     console.error('Error updating product:', error);
-    res
-      .status(500)
-      .json({ error: 'An error occurred while updating the product' });
+    return next(error);
   }
 };
 
 // VIEW PRODUCT DETAILS
-const viewProduct = async (req, res) => {
+const viewProduct = async (req, res, next) => {
   try {
     const product = await Products.findOne({ where: { id: req.params.id } });
 
     if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+      throw new Error('error: Product not found');
     }
 
     res.json({
@@ -75,14 +71,12 @@ const viewProduct = async (req, res) => {
     });
   } catch (error) {
     console.error('Error while viewing product:', error);
-    res
-      .status(500)
-      .json({ error: 'An error occurred while viewing the product' });
+    return next(error);
   }
 };
 
 // DELETE PRODUCT
-const deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res, next) => {
   try {
     const product = await Products.destroy({ where: { id: req.params.id } });
 
@@ -91,10 +85,7 @@ const deleteProduct = async (req, res) => {
       data: product,
     });
   } catch (error) {
-    console.error('Error while deleting product:', error);
-    res
-      .status(500)
-      .json({ error: 'An error occurred while deleting the product' });
+    return next(error);
   }
 };
 
