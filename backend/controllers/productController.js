@@ -62,16 +62,40 @@ const updateProduct = async (req, res) => {
 
 // VIEW PRODUCT DETAILS
 const viewProduct = async (req, res) => {
-  const product = await Products.findOne({ where: { id: req.params.id } });
+  try {
+    const product = await Products.findOne({ where: { id: req.params.id } });
 
-  if (!product) {
-    return res.status(404).json({ error: 'Product not found' });
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    res.json({
+      status: 'success',
+      data: product,
+    });
+  } catch (error) {
+    console.error('Error while viewing product:', error);
+    res
+      .status(500)
+      .json({ error: 'An error occurred while viewing the product' });
   }
+};
 
-  res.json({
-    status: 'success',
-    data: product,
-  });
+// DELETE PRODUCT
+const deleteProduct = async (req, res) => {
+  try {
+    const product = await Products.destroy({ where: { id: req.params.id } });
+
+    res.json({
+      status: 'success',
+      data: product,
+    });
+  } catch (error) {
+    console.error('Error while deleting product:', error);
+    res
+      .status(500)
+      .json({ error: 'An error occurred while deleting the product' });
+  }
 };
 
 module.exports = {
@@ -79,4 +103,5 @@ module.exports = {
   createProduct,
   updateProduct,
   viewProduct,
+  deleteProduct,
 };
