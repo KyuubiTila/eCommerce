@@ -7,6 +7,7 @@ export const useProducts = create(
   persist(
     (set) => ({
       products: [],
+      singleProduct: [],
       fetchProducts: async () => {
         try {
           const response = await axios.get('http://localhost:3001/api/product');
@@ -27,7 +28,7 @@ export const useProducts = create(
 
           const { data } = response;
 
-          set({ products: data.data });
+          set({ singleProduct: data.data });
         } catch (error) {
           console.error('Error fetching products:', error);
         }

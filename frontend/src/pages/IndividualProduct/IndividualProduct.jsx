@@ -7,7 +7,7 @@ import { useProducts } from '../../stores/productStore';
 export const IndividualProduct = () => {
   const fetchSingleProduct = useProducts((state) => state.fetchSingleProduct);
 
-  const products = useProducts((state) => state.products);
+  const singleProduct = useProducts((state) => state.singleProduct);
 
   const { id } = useParams();
 
@@ -25,7 +25,7 @@ export const IndividualProduct = () => {
     brand,
     image,
     name,
-  } = products;
+  } = singleProduct;
   return (
     <div className="m-3 max-w-md mx-auto bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
       <div className="relative mx-auto w-full">

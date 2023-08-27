@@ -29,10 +29,16 @@ app.use('/api/auth', userRouter);
 // ---------product route---------
 app.use('/api/product', productRouter);
 
+// static images
+app.use('/Images', express.static('./Images'));
+
 // Error Handling Middlewares
 app.use(notFoundHandler);
 
 app.use(globalErrorHandler);
+
+// static images
+app.use('/Images', express.static('./Images'));
 
 // GO INTO THE DB AND SYNCHRONIZE IF THE MODELS ALREADY EXIST, IF NOT MAKE THEM EXIST
 db.sequelize.sync().then(() => {
