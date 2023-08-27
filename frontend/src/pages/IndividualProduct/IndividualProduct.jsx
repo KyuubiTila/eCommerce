@@ -1,15 +1,20 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useProducts } from '../../stores/productStore';
 
 export const IndividualProduct = () => {
+  const fetchSingleProduct = useProducts((state) => state.fetchSingleProduct);
+
   const products = useProducts((state) => state.products);
 
-  const { id: ProductId } = useParams();
-  const individualProduct = products.find(
-    (product) => product.id === ProductId
-  );
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetchSingleProduct(id);
+  }, []);
+
   const {
     rating,
     description,
@@ -20,7 +25,7 @@ export const IndividualProduct = () => {
     brand,
     image,
     name,
-  } = individualProduct;
+  } = products;
   return (
     <div className="m-3 max-w-md mx-auto bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
       <div className="relative mx-auto w-full">

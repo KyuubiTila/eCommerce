@@ -18,6 +18,20 @@ export const useProducts = create(
           console.error('Error fetching products:', error);
         }
       },
+
+      fetchSingleProduct: async (id) => {
+        try {
+          const response = await axios.get(
+            `http://localhost:3001/api/product/${id}`
+          );
+
+          const { data } = response;
+
+          set({ products: data.data });
+        } catch (error) {
+          console.error('Error fetching products:', error);
+        }
+      },
     }),
     { name: 'productStorage' }
   )
