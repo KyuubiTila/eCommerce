@@ -89,10 +89,25 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
+// GET ALL PRODUCT
+const getAllProducts = async (req, res, next) => {
+  try {
+    const allProducts = await Products.findAll({});
+
+    res.json({
+      status: 'success',
+      data: allProducts,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   upload,
   createProduct,
   updateProduct,
   viewProduct,
   deleteProduct,
+  getAllProducts,
 };

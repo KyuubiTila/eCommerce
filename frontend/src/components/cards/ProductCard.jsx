@@ -24,7 +24,11 @@ export const ProductCard = ({ product }) => {
           <div className="shadow p-4 rounded-lg bg-white">
             <div className="flex relative rounded-lg overflow-hidden h-52">
               <div className="transition-transform duration-500 transform ease-in-out hover:scale-110 w-full">
-                <img className="rounded-t-lg w-full h-64" alt="" src={image} />
+                <img
+                  className="rounded-t-lg w-full h-64"
+                  alt=""
+                  src={'http://localhost:3001/' + image}
+                />
               </div>
             </div>
             <div className="mt-4">

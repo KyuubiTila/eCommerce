@@ -1,7 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { products } from '../../components/products/products';
+
+import { useProducts } from '../../stores/productStore';
+
 export const IndividualProduct = () => {
+  const products = useProducts((state) => state.products);
+
   const { id: ProductId } = useParams();
   const individualProduct = products.find(
     (product) => product.id === ProductId
