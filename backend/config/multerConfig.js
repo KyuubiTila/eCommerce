@@ -1,9 +1,9 @@
 const multer = require('multer');
 const path = require('path');
 
+// Configure multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // REMEMBER TO CREATE A FOLDER CALLED Images IN YOUR BACKEND FOLDER WHERE THE IMAGES WOULD BE STORED
     cb(null, 'Images');
   },
   filename: (req, file, cb) => {
@@ -11,6 +11,7 @@ const storage = multer.diskStorage({
   },
 });
 
+// Configure multer middleware
 const upload = multer({
   storage: storage,
   limits: { fileSize: 1000000000 },

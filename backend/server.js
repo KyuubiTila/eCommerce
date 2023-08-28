@@ -21,6 +21,8 @@ var corOptions = {
 };
 app.use(cors(corOptions));
 
+app.use(express.urlencoded({ extended: true }));
+
 // -------------ROUTERS---------------
 
 // ---------users route---------

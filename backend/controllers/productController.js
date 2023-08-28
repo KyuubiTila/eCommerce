@@ -20,6 +20,7 @@ const createProduct = async (req, res, next) => {
     const product = await Products.create(productData);
     res.status(200).send(product);
     console.log(product);
+    console.log(req.file.path);
   } catch (error) {
     console.error('Error creating product:', error);
     return next(error);

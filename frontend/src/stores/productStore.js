@@ -33,6 +33,21 @@ export const useProducts = create(
           console.error('Error fetching products:', error);
         }
       },
+
+      addProduct: async (data) => {
+        console.log(data);
+
+        try {
+          await axios.post(
+            'http://localhost:3001/api/product/addproduct',
+            data
+          );
+
+          // on execution it should redirect ie navigate to the showProduct page
+        } catch (error) {
+          alert(error.response.data.error);
+        }
+      },
     }),
     { name: 'productStorage' }
   )

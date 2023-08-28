@@ -9,7 +9,7 @@ export const HomePage = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
   return (
     <div className="flex flex-wrap justify-center lg:flex-row">
       {products.map((product) => (
