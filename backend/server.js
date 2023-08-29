@@ -10,6 +10,7 @@ const {
   globalErrorHandler,
   notFoundHandler,
 } = require('./middleware/globalErrorHandler');
+const orderController = require('./routes/ordersRoute');
 // MIDDLEWARES
 // ENABLE US PARSE REQUEST FROM THE CLIENT END EXAMPLE THUNDER CLIENT OR POSTMAN AND IN THE CASE OF THE WEB CLIENT SIDE ALSO
 app.use(express.json());
@@ -30,6 +31,9 @@ app.use('/api/auth', userRouter);
 
 // ---------product route---------
 app.use('/api/product', productRouter);
+
+// ---------orders route---------
+app.use('/api/order', orderController);
 
 // static images
 app.use('/Images', express.static('./Images'));

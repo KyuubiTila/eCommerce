@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     quantity: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     image: {
@@ -16,47 +16,6 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    product: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    paymentMethod: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    isPaid: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    itemsPrice: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0.0,
-    },
-    taxPrice: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0.0,
-    },
-    shippingPrice: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0.0,
-    },
-    totalPrice: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0.0,
-    },
-    isDelivered: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    deliveredAt: {
-      type: DataTypes.DATE,
     },
   });
   return Orders;

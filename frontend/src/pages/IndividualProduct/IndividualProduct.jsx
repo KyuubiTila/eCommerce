@@ -3,24 +3,40 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useProducts } from '../../stores/productStore';
+import { useOrders } from '../../stores/orderStore';
 
 export const IndividualProduct = () => {
   const fetchSingleProduct = useProducts((state) => state.fetchSingleProduct);
 
   const singleProduct = useProducts((state) => state.singleProduct);
 
-  const { id } = useParams();
+  const { id: ProductId } = useParams();
 
   const [inputPrice, setInputPrice] = useState(1);
+
+  const addOrder = useOrders((state) => state.addOrder);
 
   const handleInputChange = (event) => {
     setInputPrice(event.target.value);
   };
 
-  useEffect(() => {
-    fetchSingleProduct(id);
-  }, [id, fetchSingleProduct]);
+  const handleAddToCart = async () => {
+    // Destructure properties of singleProduct to create new data object
+    const { name, image, price } = singleProduct;
+    const quantity = inputPrice;
+    const cartItemData = {
+      name: name,
+      price: price,
+      image: image,
+      quantity: quantity,
+    };
+    addOrder(cartItemData);
+    console.log(cartItemData);
+  };
 
+  useEffect(() => {
+    fetchSingleProduct(ProductId);
+  }, [ProductId, fetchSingleProduct]);
   const {
     rating,
     description,
@@ -117,13 +133,21 @@ export const IndividualProduct = () => {
                   OUT OF STOCK
                 </div>
               ) : (
-                <button className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800">
+                <button
+                  onClick={handleAddToCart}
+                  className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800"
+                >
                   Add To Cart
                 </button>
               )}
             </div>
           </div>
-          <div>NEW PRICE: ${newPrice.toFixed(2)} </div>
+
+          {countInStock === 0 ? (
+            ''
+          ) : (
+            <div>NEW PRICE: ${newPrice.toFixed(2)} </div>
+          )}
         </div>
       </div>
     </div>
