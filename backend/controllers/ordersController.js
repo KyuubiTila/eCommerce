@@ -11,7 +11,15 @@ const fetchAllOrders = async (req, res) => {
   res.status(200).send(orders);
 };
 
+const deleteOrder = async (req, res) => {
+  let id = req.params.id;
+
+  await Orders.destroy({ where: { id: id } });
+  res.status(200).send('deleted');
+};
+
 module.exports = {
   addOrder,
   fetchAllOrders,
+  deleteOrder,
 };

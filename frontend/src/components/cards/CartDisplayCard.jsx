@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useOrders } from '../../stores/orderStore';
+// import { useParams } from 'react-router-dom';
 
 export const CartDisplayCard = ({ order }) => {
-  const { name, quantity, image, price } = order;
+  const deleteOrder = useOrders((state) => state.deleteOrder);
+  const fetchOrder = useOrders((state) => state.fetchOrder);
+
+  const { id, name, quantity, image, price } = order;
 
   const totalPrice = price * quantity;
 
@@ -45,6 +50,11 @@ export const CartDisplayCard = ({ order }) => {
                     <div className="flex">
                       <button
                         type="button"
+                        onClick={() => {
+                          fetchOrder();
+                          deleteOrder(id);
+                          // console.log(id);
+                        }}
                         className="font-medium text-indigo-600 hover:text-indigo-500"
                       >
                         Remove

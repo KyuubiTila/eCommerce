@@ -7,6 +7,7 @@ import { useOrders } from '../../stores/orderStore';
 export const CartPage = () => {
   const fetchOrder = useOrders((state) => state.fetchOrder);
   const orders = useOrders((state) => state.orders);
+
   useEffect(() => {
     fetchOrder();
   }, [fetchOrder]);

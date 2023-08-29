@@ -11,7 +11,11 @@ export const useOrders = create(
         console.log(data);
 
         try {
-          await axios.post('http://localhost:3001/api/order/addOrder', data);
+          const product = await axios.post(
+            'http://localhost:3001/api/order/addOrder',
+            data
+          );
+          console.log(product);
         } catch (error) {
           console.error('Error fetching orders:', error);
         }
@@ -24,6 +28,17 @@ export const useOrders = create(
           const { data } = response;
 
           set({ orders: data });
+        } catch (error) {
+          console.error('Error fetching products:', error);
+        }
+      },
+
+      deleteOrder: async (id) => {
+        try {
+          const result = await axios.delete(
+            `http://localhost:3001/api/order/${id}`
+          );
+          console.log(result);
         } catch (error) {
           console.error('Error fetching products:', error);
         }
