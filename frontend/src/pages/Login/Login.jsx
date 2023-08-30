@@ -1,10 +1,15 @@
 import React from 'react';
 import { LoginCard } from '../../components/cards/LoginCard';
 import * as Yup from 'yup';
-import { useAuth } from '../../stores/auth';
+// import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+// import { useAuth } from '../../stores/auth';
 
 export const Login = () => {
-  const loginUser = useAuth((state) => state.loginUser);
+  // const userDetails = useAuth((state) => state.userDetails);
+
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('You must input a name'),
@@ -15,6 +20,23 @@ export const Login = () => {
     name: '',
     password: '',
   };
+
+  // useEffect(() => {
+  const loginUser = async (data) => {
+    try {
+      const loggedInUser = await axios.post(
+        'http://localhost:3001/api/auth/login',
+        data
+      );
+
+      localStorage.setItem('accessToken', loggedInUser.data.token);
+      navigate('/home');
+    } catch (error) {
+      console.error('Error logging in:', error);
+    }
+  };
+  // loginUser();
+  // }, []);
 
   return (
     <LoginCard

@@ -4,9 +4,10 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../stores/auth';
 
 export const Header = () => {
-  const username = useAuth((state) => state.username);
-
   const [toggle, setToggle] = useState('hidden');
+  const user = useAuth((state) => state.user);
+  const loggedIn = useAuth((state) => state.loggedIn);
+
   const changeToggle = () => {
     setToggle((toggle) => (toggle === 'hidden' ? '' : 'hidden'));
   };
@@ -16,9 +17,13 @@ export const Header = () => {
         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
           Commerce
         </span>
-        <span className="self-center text-sm font-semibold whitespace-nowrap dark:text-white">
-          Welcome: {username}
-        </span>
+
+        {loggedIn && (
+          <span className="self-center text-sm font-semibold whitespace-nowrap dark:text-white">
+            Welcome: {user}
+          </span>
+        )}
+
         <div className="flex md:order-2">
           <button
             data-collapse-toggle="navbar-sticky"
@@ -78,24 +83,38 @@ export const Header = () => {
                 Cart
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                onClick={changeToggle}
-                to={'/register'}
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Register
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                onClick={changeToggle}
-                to={'/login'}
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Login
-              </NavLink>
-            </li>
+            {!loggedIn ? (
+              <>
+                <li>
+                  <NavLink
+                    onClick={changeToggle}
+                    to={'/register'}
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  >
+                    Register
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    onClick={changeToggle}
+                    to={'/login'}
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  >
+                    Login
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <li>
+                <NavLink
+                  onClick={changeToggle}
+                  to={'/home'}
+                  className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                >
+                  Logout
+                </NavLink>
+              </li>
+            )}
           </ul>
         </div>
       </div>

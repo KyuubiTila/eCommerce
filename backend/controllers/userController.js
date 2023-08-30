@@ -111,9 +111,16 @@ const viewIndividualProfile = async (req, res, next) => {
   }
 };
 
+// CONFRIM TOKEN TO BE CORRECT AND FETCH IT'S ENCRYPTED PARAMETERS
+const actualToken = (req, res) => {
+  // this is the only guy that an throw the req.user from the authMiddleware
+  res.json(req.user);
+};
+
 module.exports = {
   createUsers,
   login,
   updateUser,
   viewIndividualProfile,
+  actualToken,
 };

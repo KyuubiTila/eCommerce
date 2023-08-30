@@ -1,13 +1,12 @@
 import axios from 'axios';
-
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export const useAuth = create(
   persist(
     (set) => ({
-      token: [],
-      username: [],
+      user: [],
+      loggedIn: false,
       register: async (data) => {
         // console.log(data);
 
@@ -22,16 +21,22 @@ export const useAuth = create(
         }
       },
 
-      loginUser: async (data) => {
+      userDetails: async () => {
         try {
-          const loggedInUser = await axios.post(
-            'http://localhost:3001/api/auth/login',
-            data
+          const details = await axios.get(
+            'http://localhost:3001/api/auth/verify/authToken',
+            {
+              // THIS IS THE TOKEN CARRIER FROM WHICH THE AUTH WILL TAKE ITS PARAMETERS FOR CHECK
+              headers: {
+                accessToken: localStorage.getItem('accessToken'),
+              },
+            }
           );
 
-          localStorage.setItem('accessToken', loggedInUser.data.token);
-          set({ token: loggedInUser.data.token });
-          set({ username: data.name });
+          console.log(details);
+
+          set({ user: details.data.name });
+          set({ loggedIn: true });
         } catch (error) {
           console.error('Error logging in:', error);
         }

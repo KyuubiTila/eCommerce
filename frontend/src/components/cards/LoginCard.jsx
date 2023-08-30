@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 export const LoginCard = ({ loginUser, initialValues, validationSchema }) => {
   return (
@@ -6,6 +7,7 @@ export const LoginCard = ({ loginUser, initialValues, validationSchema }) => {
       initialValues={initialValues}
       onSubmit={(data, params) => {
         loginUser(data);
+
         params.resetForm();
       }}
       validationSchema={validationSchema}
