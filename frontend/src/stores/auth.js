@@ -26,7 +26,6 @@ export const useAuth = create(
           const details = await axios.get(
             'http://localhost:3001/api/auth/verify/authToken',
             {
-              // THIS IS THE TOKEN CARRIER FROM WHICH THE AUTH WILL TAKE ITS PARAMETERS FOR CHECK
               headers: {
                 accessToken: localStorage.getItem('accessToken'),
               },
@@ -40,6 +39,11 @@ export const useAuth = create(
         } catch (error) {
           console.error('Error logging in:', error);
         }
+      },
+
+      logOut: () => {
+        set({ user: [] });
+        set({ loggedIn: false });
       },
     }),
     { name: 'auth' }

@@ -4,10 +4,10 @@ import * as Yup from 'yup';
 // import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-// import { useAuth } from '../../stores/auth';
+import { useAuth } from '../../stores/auth';
 
 export const Login = () => {
-  // const userDetails = useAuth((state) => state.userDetails);
+  const userDetails = useAuth((state) => state.userDetails);
 
   const navigate = useNavigate();
 
@@ -21,7 +21,6 @@ export const Login = () => {
     password: '',
   };
 
-  // useEffect(() => {
   const loginUser = async (data) => {
     try {
       const loggedInUser = await axios.post(
@@ -31,12 +30,13 @@ export const Login = () => {
 
       localStorage.setItem('accessToken', loggedInUser.data.token);
       navigate('/home');
+      userDetails();
     } catch (error) {
       console.error('Error logging in:', error);
     }
   };
-  // loginUser();
-  // }, []);
+  // useEffect(() => {
+  // }, [userDetails]);
 
   return (
     <LoginCard
