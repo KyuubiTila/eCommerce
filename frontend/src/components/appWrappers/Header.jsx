@@ -1,8 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../stores/auth';
 
 export const Header = () => {
+  const username = useAuth((state) => state.username);
+
   const [toggle, setToggle] = useState('hidden');
   const changeToggle = () => {
     setToggle((toggle) => (toggle === 'hidden' ? '' : 'hidden'));
@@ -12,6 +15,9 @@ export const Header = () => {
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
           Commerce
+        </span>
+        <span className="self-center text-sm font-semibold whitespace-nowrap dark:text-white">
+          Welcome: {username}
         </span>
         <div className="flex md:order-2">
           <button

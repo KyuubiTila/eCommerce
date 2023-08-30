@@ -7,7 +7,7 @@ const {
 const userRouter = require('express').Router();
 
 userRouter.post('/register', createUsers);
-userRouter.get('/login', login);
+userRouter.post('/login', login);
 userRouter.put('/updateUser/:name', updateUser);
 userRouter.get('/:id', viewIndividualProfile);
 

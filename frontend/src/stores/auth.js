@@ -6,7 +6,8 @@ import { persist } from 'zustand/middleware';
 export const useAuth = create(
   persist(
     (set) => ({
-      user: [],
+      token: [],
+      username: [],
       register: async (data) => {
         // console.log(data);
 
@@ -17,7 +18,22 @@ export const useAuth = create(
           );
           console.log(user);
         } catch (error) {
-          console.error('Error fetching orders:', error);
+          console.error('Error registering user:', error);
+        }
+      },
+
+      loginUser: async (data) => {
+        try {
+          const loggedInUser = await axios.post(
+            'http://localhost:3001/api/auth/login',
+            data
+          );
+
+          localStorage.setItem('accessToken', loggedInUser.data.token);
+          set({ token: loggedInUser.data.token });
+          set({ username: data.name });
+        } catch (error) {
+          console.error('Error logging in:', error);
         }
       },
     }),
