@@ -37,7 +37,8 @@ const login = async (req, res, next) => {
       if (checkPassword) {
         const accessToken = sign(
           { name: findUser.name, id: findUser.id },
-          'importantsecrete'
+          'importantsecrete',
+          { expiresIn: '30d' }
         );
         return res.json({
           token: accessToken,
