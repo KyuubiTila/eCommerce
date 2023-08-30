@@ -47,7 +47,11 @@ export const useOrders = create(
 
       deleteOrder: async (id) => {
         try {
-          await axios.delete(`http://localhost:3001/api/order/${id}`);
+          await axios.delete(`http://localhost:3001/api/order/${id}`, {
+            headers: {
+              accessToken: localStorage.getItem('accessToken'),
+            },
+          });
           // console.log(result);
 
           const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
