@@ -6,11 +6,14 @@ const cors = require('cors');
 const db = require('./models');
 const userRouter = require('./routes/userRoute');
 const productRouter = require('./routes/productRoute');
+const orderRouter = require('./routes/ordersRoute');
+const shippingAddressRouter = require('./routes/shippingAddressRoute');
+
 const {
   globalErrorHandler,
   notFoundHandler,
 } = require('./middleware/globalErrorHandler');
-const orderController = require('./routes/ordersRoute');
+
 // MIDDLEWARES
 // ENABLE US PARSE REQUEST FROM THE CLIENT END EXAMPLE THUNDER CLIENT OR POSTMAN AND IN THE CASE OF THE WEB CLIENT SIDE ALSO
 app.use(express.json());
@@ -33,7 +36,10 @@ app.use('/api/auth', userRouter);
 app.use('/api/product', productRouter);
 
 // ---------orders route---------
-app.use('/api/order', orderController);
+app.use('/api/order', orderRouter);
+
+// ---------shipping Address route---------
+app.use('/api/ShippingAddress', shippingAddressRouter);
 
 // static images
 app.use('/Images', express.static('./Images'));
