@@ -12,6 +12,7 @@ export const Header = () => {
   const logout = () => {
     localStorage.removeItem('auth');
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('shippingAddress');
     logOut();
     changeToggle();
   };

@@ -9,6 +9,10 @@ export const ShippingAddress = () => {
   const fetchAddress = shippingAddress((state) => state.fetchAddress);
   const address = shippingAddress((state) => state.address);
 
+  useEffect(() => {
+    fetchAddress();
+  }, [fetchAddress]);
+
   const validationSchema = Yup.object().shape({
     address: Yup.string().required('You must input your address'),
     city: Yup.string().required('You must input your city'),
@@ -17,15 +21,11 @@ export const ShippingAddress = () => {
   });
 
   const initialValues = {
-    address: address.address,
-    city: address.city,
-    postalCode: address.postalCode,
-    country: address.country,
+    address: address ? address.address : '',
+    city: address ? address.city : '',
+    postalCode: address ? address.postalCode : '',
+    country: address ? address.country : '',
   };
-
-  useEffect(() => {
-    fetchAddress();
-  }, [fetchAddress]);
 
   const updateShippingAddress = async (data) => {
     console.log(data);
