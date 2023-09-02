@@ -14,7 +14,23 @@ export const IndividualProduct = () => {
 
   const [inputPrice, setInputPrice] = useState(1);
 
-  const addOrder = useOrders((state) => state.addOrder);
+  const [addOrder, orders] = useOrders((state) => [
+    state.addOrder,
+    state.orders,
+  ]);
+
+  // const query = useQuery({
+  //   queryKey: ['my-orders'],
+  //   queryFn: async () => {
+  //     return await axios.get('http://localhost:3001/api/order', data);
+  //   },
+  // });
+
+  // const orders = query.data;
+
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(orders));
+  }, [orders]);
 
   const handleInputChange = (event) => {
     setInputPrice(event.target.value);
@@ -32,6 +48,7 @@ export const IndividualProduct = () => {
     };
     addOrder(cartItemData);
     console.log(cartItemData);
+    // naviagte(`/individualProduct/${ProductId}`);
   };
 
   useEffect(() => {
@@ -48,7 +65,9 @@ export const IndividualProduct = () => {
     image,
     name,
   } = singleProduct;
+
   const newPrice = parseFloat(price) * parseFloat(inputPrice);
+
   return (
     <div className="m-3 max-w-md mx-auto bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
       <div className="relative mx-auto w-full">

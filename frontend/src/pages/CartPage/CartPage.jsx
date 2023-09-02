@@ -1,20 +1,24 @@
 import React from 'react';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { CartDisplayCard } from '../../components/cards/CartDisplayCard';
 import { CartFooter } from '../../components/cards/CartFooter';
 import { useOrders } from '../../stores/orderStore';
 
 export const CartPage = () => {
-  const fetchOrder = useOrders((state) => state.fetchOrder);
   const orders = useOrders((state) => state.orders);
 
-  useEffect(() => {
-    fetchOrder();
-  }, [fetchOrder]);
+  const ordersById = orders.reduce((acc, order) => {
+    if (!acc[order.id] || order.updatedAt > acc[order.id].updatedAt) {
+      acc[order.id] = order;
+    }
+    return acc;
+  }, {});
+
+  const uniqueOrders = Object.values(ordersById);
 
   return (
     <>
-      {orders.map((order) => (
+      {uniqueOrders.map((order) => (
         <CartDisplayCard key={order.id} order={order} />
       ))}
 

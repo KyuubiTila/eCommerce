@@ -1,13 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 export const CartFooter = ({ orders }) => {
-  const price = orders.map((element) => {
-    return element.price * element.quantity;
+  // Group orders by their unique 'id' using an object
+  const ordersById = orders.reduce((acc, order) => {
+    if (!acc[order.id] || order.updatedAt > acc[order.id].updatedAt) {
+      acc[order.id] = order;
+    }
+    return acc;
+  }, {});
+
+  // Convert the grouped object back to an array of unique orders
+  const uniqueOrders = Object.values(ordersById);
+
+  const newPrices = uniqueOrders.map((elements) => {
+    return elements.price * elements.quantity;
   });
-  const sum = price.reduce((accumulator, currentValue) => {
+
+  const sum = newPrices.reduce((accumulator, currentValue) => {
     return accumulator + currentValue;
   }, 0);
-  console.log(sum);
+
   return (
     <div>
       <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
