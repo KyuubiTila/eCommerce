@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-export const ItemsDisplayCard = ({ order, totalItemsPrice }) => {
+export const ItemsDisplayCard = ({ order }) => {
   const { name, quantity, image, price } = order;
   const totalPrice = price * quantity;
   console.log(totalPrice);

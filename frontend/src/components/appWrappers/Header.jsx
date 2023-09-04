@@ -29,6 +29,7 @@ export const Header = () => {
     localStorage.removeItem('auth');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('shippingAddress');
+    localStorage.removeItem('confirmedData');
     logOut();
     changeToggle();
   };
@@ -54,89 +55,6 @@ export const Header = () => {
             Commerce
           </span>
         </Link>
-
-        {loggedIn && (
-          <span className="self-center text-sm font-semibold whitespace-nowrap dark:text-white relative">
-            <button
-              id="dropdownDefaultButton"
-              onClick={toggleDropdown}
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              type="button"
-            >
-              Welcome: {user}
-              <svg
-                className="w-2.5 h-2.5 ml-2.5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 10 6"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m1 1 4 4 4-4"
-                />
-              </svg>
-            </button>
-            <div
-              id="dropdown"
-              className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute right-0 mt-2"
-            >
-              <ul
-                className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdownDefaultButton"
-              >
-                <li>
-                  <Link
-                    to={''}
-                    onClick={closeDropdown}
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Dashboard
-                  </Link>
-                </li>
-                <li>
-                  <NavLink
-                    onClick={changeToggle}
-                    to={'/createProduct'}
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Create Product
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    onClick={closeDropdown}
-                    to={'/shippingAddress'}
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    ShippingAddress
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    onClick={closeDropdown}
-                    to={'/paymentPage'}
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    PaymentPage
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    onClick={logout}
-                    to={'/home'}
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Logout
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
-          </span>
-        )}
 
         <div className="flex md:order-2">
           <button
@@ -211,6 +129,80 @@ export const Header = () => {
                   </NavLink>
                 </li>
               </>
+            )}
+            {loggedIn && (
+              <span className="self-center text-sm font-semibold whitespace-nowrap dark:text-white relative">
+                <button
+                  id="dropdownDefaultButton"
+                  onClick={toggleDropdown}
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  type="button"
+                >
+                  Welcome: {user}
+                  <svg
+                    className="w-2.5 h-2.5 ml-2.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 10 6"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m1 1 4 4 4-4"
+                    />
+                  </svg>
+                </button>
+                <div
+                  id="dropdown"
+                  className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute right-0 mt-2"
+                >
+                  <ul
+                    className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                    aria-labelledby="dropdownDefaultButton"
+                  >
+                    <li>
+                      <Link
+                        to={'/dashboard'}
+                        onClick={closeDropdown}
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        Dashboard
+                      </Link>
+                    </li>
+                    <li>
+                      <NavLink
+                        onClick={closeDropdown}
+                        to={'/createProduct'}
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        Create Product
+                      </NavLink>
+                    </li>
+
+                    <li>
+                      <NavLink
+                        onClick={closeDropdown}
+                        to={'/paymentPage'}
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        PaymentPage
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        onClick={logout}
+                        to={'/home'}
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        Logout
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
+              </span>
             )}
           </ul>
         </div>

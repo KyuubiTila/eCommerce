@@ -8,6 +8,8 @@ import { Register } from '../pages/Register';
 import { Login } from '../pages/Login/Login';
 import { ShippingAddress } from '../pages/ShippingAddress';
 import { PaymentPage } from '../pages/PaymentOption/PaymentPage';
+import { Dashboard } from '../pages/Dashboard/Dashboard';
+import { OrderConfirmationPage } from '../pages/OrderConfirmation/OrderConfirmationPage';
 export const AllRoutes = () => {
   return (
     <>
@@ -20,6 +22,8 @@ export const AllRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/shippingAddress" element={<ShippingAddress />} />
         <Route path="/paymentPage" element={<PaymentPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/orderConfirmation" element={<OrderConfirmationPage />} />
       </Routes>
     </>
   );

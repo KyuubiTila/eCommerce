@@ -3,9 +3,10 @@ import { ItemsDisplayCard } from '../../components/cards/ItemsDisplayCard';
 import { PayWithCard } from '../../components/cards/PayWithCard';
 import { useOrders } from '../../stores/orderStore';
 import { shippingAddress } from '../../stores/shippingAddress';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const PaymentPage = () => {
+  const Navigate = useNavigate();
   const address = shippingAddress((state) => state.address);
 
   const [selectedOption, setSelectedOption] = useState(''); // State to store the selected option
@@ -22,28 +23,36 @@ export const PaymentPage = () => {
     }
     return acc;
   }, {});
-  const uniqueOrders = Object.values(ordersById);
-  console.log(uniqueOrders);
+  const confirmedOrders = Object.values(ordersById);
+  console.log(confirmedOrders);
 
-  let totalItemsPrice = 0;
+  let confirmedTotalItemsPrice = 0;
 
-  for (let i = 0; i < uniqueOrders.length; i++) {
-    totalItemsPrice += uniqueOrders[i].price * uniqueOrders[i].quantity;
+  for (let i = 0; i < confirmedOrders.length; i++) {
+    confirmedTotalItemsPrice +=
+      confirmedOrders[i].price * confirmedOrders[i].quantity;
   }
-  console.log(totalItemsPrice);
 
-  console.log(address);
+  const confirmedShippingAddress = `${address.address} ${address.city} ${address.country}`;
+
+  const confirmed = () => {
+    const data = {
+      confirmedShippingAddress: confirmedShippingAddress,
+      confirmedTotalItemsPrice: confirmedTotalItemsPrice,
+      confirmedOrders: confirmedOrders,
+    };
+    const confirmedData = JSON.stringify(data);
+    localStorage.setItem('confirmedData', confirmedData);
+    console.log(data);
+    Navigate('/orderConfirmation');
+  };
 
   return (
     <div>
       {/* Orders section */}
       <div className="bg-blue-200 p-4 rounded mb-2">
-        {uniqueOrders.map((order) => (
-          <ItemsDisplayCard
-            key={order.id}
-            order={order}
-            totalItemsPrice={totalItemsPrice}
-          />
+        {confirmedOrders.map((order) => (
+          <ItemsDisplayCard key={order.id} order={order} />
         ))}
       </div>
 
@@ -52,7 +61,9 @@ export const PaymentPage = () => {
         <div className="ml-4 flex flex-1 flex-col">
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p className="text-gray-500">Total to be paid:</p>
-            <p className="mt-1 text-sm text-gray-500">${totalItemsPrice}</p>
+            <p className="mt-1 text-sm text-gray-500">
+              ${confirmedTotalItemsPrice}
+            </p>
           </div>
         </div>
       </div>
@@ -66,7 +77,7 @@ export const PaymentPage = () => {
           ADDRESS
         </label>
         <div className="block mb-2 text-sm pt-2 font-medium text-gray-900 dark:text-white">
-          Your address is : {address.address} {address.city} {address.country}
+          Your address is : {confirmedShippingAddress}
           <Link to={'/shippingAddress'}>
             <br />
             <br />
@@ -93,7 +104,7 @@ export const PaymentPage = () => {
         >
           <option value="">Choose payment method</option>
           <option value="card">CARD</option>
-          <option value="transfer">TRANSFER</option>
+          <option value="paymentOnDelivery">PAYMENT ON DELIVERY</option>
           <option value="paypal">PAYPAL</option>
           <option value="interswitch">INTERSWITCH</option>
         </select>
@@ -102,7 +113,42 @@ export const PaymentPage = () => {
       {/* Payment with Card section (conditionally rendered) */}
       {selectedOption === 'card' && (
         <div className="bg-blue-200 p-4 rounded mb-2">
-          <PayWithCard totalItemsPrice={totalItemsPrice} />
+          <PayWithCard
+            confirmedTotalItemsPrice={confirmedTotalItemsPrice}
+            confirmed={confirmed}
+          />
+        </div>
+      )}
+
+      {selectedOption === 'paymentOnDelivery' && (
+        <div className="mt-8">
+          <button
+            onClick={confirmed}
+            type="submit"
+            className="w-full flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+          >
+            Confirm to Pay $ {confirmedTotalItemsPrice}
+          </button>
+        </div>
+      )}
+      {selectedOption === 'paypal' && (
+        <div className="mt-8">
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+          >
+            Paypal payment option coming soon...
+          </button>
+        </div>
+      )}
+      {selectedOption === 'interswitch' && (
+        <div className="mt-8">
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+          >
+            Interswitch payment option coming soon...
+          </button>
         </div>
       )}
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const PayWithCard = ({ totalItemsPrice }) => {
+export const PayWithCard = ({ confirmedTotalItemsPrice, confirmed }) => {
   return (
     <div>
       <div className="w-full max-w-lg mx-auto p-8">
@@ -70,10 +70,11 @@ export const PayWithCard = ({ totalItemsPrice }) => {
           </div>
           <div className="mt-8">
             <button
+              onClick={confirmed}
               type="submit"
               className="w-full flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
             >
-              Pay $ {totalItemsPrice}
+              Pay $ {confirmedTotalItemsPrice}
             </button>
           </div>
         </div>
