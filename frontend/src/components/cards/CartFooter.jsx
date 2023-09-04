@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../stores/auth';
 
 export const CartFooter = ({ orders }) => {
+  // logged;
+  const loggedIn = useAuth((state) => state.loggedIn);
+
   // Group orders by their unique 'id' using an object
   const ordersById = orders.reduce((acc, order) => {
     if (!acc[order.id] || order.updatedAt > acc[order.id].updatedAt) {
@@ -31,14 +35,17 @@ export const CartFooter = ({ orders }) => {
         <p className="mt-0.5 text-sm text-gray-500">
           Shipping and taxes calculated at checkout.
         </p>
-        <div className="mt-6">
-          <Link
-            to={'/paymentPage'}
-            className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-          >
-            Checkout
-          </Link>
-        </div>
+        {loggedIn && (
+          <div className="mt-6">
+            <Link
+              to={'/paymentPage'}
+              className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+            >
+              Checkout
+            </Link>
+          </div>
+        )}
+
         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
           <p>
             or
