@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 export const ItemsDisplayCard = ({ order }) => {
-  const { name, quantity, image, price } = order;
-  const totalPrice = price * quantity;
-  console.log(totalPrice);
+  const { name, image, price } = order;
+  const { totalPrice, quantity } = order.Orders[0];
+
+  // console.log(totalPrice);
 
   return (
     <div>

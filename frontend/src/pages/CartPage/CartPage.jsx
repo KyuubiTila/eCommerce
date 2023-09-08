@@ -8,7 +8,10 @@ export const CartPage = () => {
   const orders = useOrders((state) => state.orders);
 
   const ordersById = orders.reduce((acc, order) => {
-    if (!acc[order.id] || order.updatedAt > acc[order.id].updatedAt) {
+    if (
+      !acc[order.id] ||
+      order.Orders[0].updatedAt > acc[order.id].Orders[0].updatedAt
+    ) {
       acc[order.id] = order;
     }
     return acc;

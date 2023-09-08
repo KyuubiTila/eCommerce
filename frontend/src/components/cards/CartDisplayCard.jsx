@@ -4,9 +4,8 @@ import { useOrders } from '../../stores/orderStore';
 export const CartDisplayCard = ({ order }) => {
   const deleteOrder = useOrders((state) => state.deleteOrder);
 
-  const { id, name, quantity, image, price } = order;
-
-  const totalPrice = price * quantity;
+  const { name, image, price } = order;
+  const { ProductId, totalPrice, quantity } = order.Orders[0];
 
   return (
     <div className="flex h-full flex-col overflow-y-scroll border-t-8 bg-white shadow-xl">
@@ -48,9 +47,7 @@ export const CartDisplayCard = ({ order }) => {
                     <div className="flex">
                       <button
                         type="button"
-                        onClick={() => {
-                          deleteOrder(id);
-                        }}
+                        onClick={() => deleteOrder(ProductId)}
                         className="font-medium text-indigo-600 hover:text-indigo-500"
                       >
                         Remove

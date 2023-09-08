@@ -32,9 +32,6 @@ module.exports = (sequelize, DataTypes) => {
     Users.hasOne(models.ShippingAddress, {
       onDelete: 'cascade',
     });
-    Users.hasOne(models.Checkout, {
-      onDelete: 'cascade',
-    });
   };
 
   return Users;

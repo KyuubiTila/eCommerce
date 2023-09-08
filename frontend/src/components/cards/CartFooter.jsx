@@ -18,7 +18,7 @@ export const CartFooter = ({ orders }) => {
   const uniqueOrders = Object.values(ordersById);
 
   const newPrices = uniqueOrders.map((elements) => {
-    return elements.price * elements.quantity;
+    return elements.Orders[0].totalPrice;
   });
 
   const sum = newPrices.reduce((accumulator, currentValue) => {

@@ -38,13 +38,13 @@ export const IndividualProduct = () => {
 
   const handleAddToCart = async () => {
     // Destructure properties of singleProduct to create new data object
-    const { name, image, price } = singleProduct;
+    const { id, price } = singleProduct;
     const quantity = inputPrice;
     const cartItemData = {
-      name: name,
       price: price,
-      image: image,
       quantity: quantity,
+      ProductId: id,
+      totalPrice: quantity * price,
     };
     addOrder(cartItemData);
     console.log(cartItemData);

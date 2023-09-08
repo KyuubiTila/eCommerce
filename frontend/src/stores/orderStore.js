@@ -34,9 +34,10 @@ export const useOrders = create(
         }
       },
 
-      deleteOrder: async (id) => {
+      deleteOrder: async (ProductId) => {
+        console.log(ProductId);
         try {
-          await axios.delete(`http://localhost:3001/api/order/${id}`, {
+          await axios.delete(`http://localhost:3001/api/order/${ProductId}`, {
             headers: {
               accessToken: localStorage.getItem('accessToken'),
             },
@@ -44,7 +45,7 @@ export const useOrders = create(
 
           set((state) => ({
             orders: state.orders.filter((element) => {
-              return element.id !== id;
+              return element.Orders[0].ProductId !== ProductId;
             }),
           }));
         } catch (error) {

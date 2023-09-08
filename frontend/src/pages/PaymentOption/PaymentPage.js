@@ -4,6 +4,7 @@ import { PayWithCard } from '../../components/cards/PayWithCard';
 import { useOrders } from '../../stores/orderStore';
 import { shippingAddress } from '../../stores/shippingAddress';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export const PaymentPage = () => {
   const Navigate = useNavigate();
@@ -18,22 +19,35 @@ export const PaymentPage = () => {
   const orders = useOrders((state) => state.orders);
 
   const ordersById = orders.reduce((acc, order) => {
-    if (!acc[order.id] || order.updatedAt > acc[order.id].updatedAt) {
+    if (
+      !acc[order.id] ||
+      order.Orders[0].updatedAt > acc[order.id].Orders[0].updatedAt
+    ) {
       acc[order.id] = order;
     }
     return acc;
   }, {});
+
   const confirmedOrders = Object.values(ordersById);
-  console.log(confirmedOrders);
 
-  let confirmedTotalItemsPrice = 0;
+  const confirming = confirmedOrders.map((items) => {
+    return items.Orders[0].totalPrice;
+  });
 
-  for (let i = 0; i < confirmedOrders.length; i++) {
-    confirmedTotalItemsPrice +=
-      confirmedOrders[i].price * confirmedOrders[i].quantity;
-  }
+  const confirmedTotalItemsPrice = confirming.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
 
   const confirmedShippingAddress = `${address.address} ${address.city} ${address.country}`;
+
+  const updateOrder = async ({ ids }) => {
+    try {
+      await axios.put('http://localhost:3001/api/order', { ids });
+    } catch (error) {
+      console.error('Error updating products:', error);
+    }
+  };
 
   const confirmed = () => {
     const data = {
@@ -43,10 +57,15 @@ export const PaymentPage = () => {
     };
     const confirmedData = JSON.stringify(data);
     localStorage.setItem('confirmedData', confirmedData);
-    console.log(data);
     Navigate('/orderConfirmation');
+    const ids = data.confirmedOrders.map((items) => {
+      return items.Orders[0].id;
+    });
+    console.log(ids);
+    updateOrder({ ids });
+    localStorage.removeItem('orderStorage');
+    localStorage.removeItem('cartItems');
   };
-
   return (
     <div>
       {/* Orders section */}
@@ -151,6 +170,20 @@ export const PaymentPage = () => {
           </button>
         </div>
       )}
+      <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+        <p>
+          or
+          <Link to={'/home'}>
+            <button
+              type="button"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+            >
+              Continue Shopping
+              <span aria-hidden="true"> &rarr;</span>
+            </button>
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };

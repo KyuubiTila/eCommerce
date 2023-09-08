@@ -184,15 +184,6 @@ export const Header = () => {
 
                     <li>
                       <NavLink
-                        onClick={closeDropdown}
-                        to={'/paymentPage'}
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >
-                        PaymentPage
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink
                         onClick={logout}
                         to={'/home'}
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
