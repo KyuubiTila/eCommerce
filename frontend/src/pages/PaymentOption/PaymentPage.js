@@ -63,8 +63,7 @@ export const PaymentPage = () => {
     });
     console.log(ids);
     updateOrder({ ids });
-    localStorage.removeItem('orderStorage');
-    localStorage.removeItem('cartItems');
+    useOrders.setState({ orders: [] });
   };
   return (
     <div>

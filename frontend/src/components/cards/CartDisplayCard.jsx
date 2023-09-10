@@ -10,15 +10,6 @@ export const CartDisplayCard = ({ order }) => {
   return (
     <div className="flex h-full flex-col overflow-y-scroll border-t-8 bg-white shadow-xl">
       <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
-        <div className="flex items-start justify-between">
-          <h2
-            className="text-lg font-medium text-gray-900"
-            id="slide-over-title"
-          >
-            Shopping cart
-          </h2>
-        </div>
-
         <div className="mt-8">
           <div className="flow-root">
             <div role="list" className="-my-6 divide-y divide-gray-200">

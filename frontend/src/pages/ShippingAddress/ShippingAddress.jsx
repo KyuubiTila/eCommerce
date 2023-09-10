@@ -28,8 +28,6 @@ export const ShippingAddress = () => {
   };
 
   const updateShippingAddress = async (data) => {
-    console.log(data);
-
     try {
       await axios.put(
         'http://localhost:3001/api/ShippingAddress/updateAddress',

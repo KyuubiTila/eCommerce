@@ -30,6 +30,7 @@ export const Header = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('shippingAddress');
     localStorage.removeItem('confirmedData');
+    localStorage.removeItem('orderStorage');
     logOut();
     changeToggle();
   };

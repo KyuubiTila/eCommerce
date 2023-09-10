@@ -18,8 +18,6 @@ export const shippingAddress = create(
             }
           );
 
-          console.log(addressDetails.data);
-
           set({ address: addressDetails.data });
         } catch (error) {
           console.error('Error fetching products:', error);

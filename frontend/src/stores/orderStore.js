@@ -17,6 +17,7 @@ export const useOrders = create(
   persist(
     (set) => ({
       orders: savedOrders(),
+      paidOrdersList: [],
       addOrder: async (data) => {
         try {
           const product = await axios.post(
@@ -35,7 +36,6 @@ export const useOrders = create(
       },
 
       deleteOrder: async (ProductId) => {
-        console.log(ProductId);
         try {
           await axios.delete(`http://localhost:3001/api/order/${ProductId}`, {
             headers: {
@@ -48,6 +48,30 @@ export const useOrders = create(
               return element.Orders[0].ProductId !== ProductId;
             }),
           }));
+          set((state) => ({
+            paidOrdersList: state.paidOrdersList.filter((element) => {
+              console.log(element);
+              return element.ProductId !== ProductId;
+            }),
+          }));
+        } catch (error) {
+          console.error('Error fetching products:', error);
+        }
+      },
+
+      fetchPaidOrders: async () => {
+        try {
+          const paidOrders = await axios.get(
+            'http://localhost:3001/api/order',
+            {
+              headers: {
+                accessToken: localStorage.getItem('accessToken'),
+              },
+            }
+          );
+          const { data } = paidOrders;
+
+          set({ paidOrdersList: data });
         } catch (error) {
           console.error('Error fetching products:', error);
         }

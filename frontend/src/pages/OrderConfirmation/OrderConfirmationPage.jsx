@@ -4,6 +4,7 @@ export const OrderConfirmationPage = () => {
   const data = JSON.parse(localStorage.getItem('confirmedData'));
 
   console.log(data);
+
   return (
     data && (
       <>
